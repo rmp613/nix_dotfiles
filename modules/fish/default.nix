@@ -50,37 +50,6 @@
       gmt = "go mod tidy";
       grm = "go run ./...";
 
-      # kubectl
-      kx = "kubectx";
-      kn = "kubens";
-      k = "kubectl";
-      sk = "kubectl -n kube-system";
-      kg = "kubectl get";
-      kgp = "kubectl get po";
-      kga = "kubectl get --all-namespaces";
-      kd = "kubectl describe";
-      kdp = "kubectl describe po";
-      krm = "kubectl delete";
-      ke = "kubectl edit";
-      kex = "kubectl exec -it";
-      kdebug = ''
-        kubectl run -i -t debug --rm --image=caarlos0/debug --restart=Never
-      '';
-      knrunning = "kubectl get pods --field-selector=status.phase!=Running";
-      kfails = ''
-        kubectl get po -owide --all-namespaces | grep "0/" | tee /dev/tty | wc -l
-      '';
-      kimg = ''
-        kubectl get deployment --output=jsonpath='{.spec.template.spec.containers[*].image}'
-      '';
-      kvs = "kubectl view-secret";
-      kgno = "kubectl get no --sort-by=.metadata.creationTimestamp";
-      kdrain = "kubectl drain --ignore-daemonsets --delete-local-data";
-
-      # neovim
-      e = "nvim";
-      v = "nvim";
-
       # terraform
       tf = "terraform";
 

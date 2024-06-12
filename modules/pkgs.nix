@@ -9,45 +9,45 @@
     # custom packages
     (pkgs.callPackage ../pkgs/bins { })
 
-    age
-    comma
-    cosign
+    # age # modern encryption tool
+    comma # https://github.com/nix-community/comma runs without install via , prefixing tools
+    # cosign # container signing
     curl
-    entr
-    fd
-    gnumake
-    go-task
+    entr # run commands when files change
+    fd # find alt
+    # gnumake
+    # go-task
     graphviz
     httpstat
-    hyperfine
-    inetutils
-    jq
-    moreutils
-    ncdu
-    netcat-gnu
-    nmap
+    hyperfine # cli benchmarking
+    # inetutils 
+    jq # json parser
+    moreutils # random additional commands such as "parallel" to run commands in parallel
+    ncdu # disk usage analyzer
+    # netcat-gnu
+    # nmap # network scanner
     nodejs
-    onefetch
+    onefetch # git repo summary
     p7zip
-    ranger
-    ripgrep
-    scc
-    sqlite
-    tldr
-    unixtools.watch
-    unrar
-    vegeta
-    wget
-    yarn
+    ranger # file manager
+    broot # file manager
+    ripgrep # grep alt
+    scc # code counter
+    sqlite # db
+    tldr 
+    # unixtools.watch
+    # unrar
+    vegeta # load testing
+    wget # download
 
     # gke stuff
-    (google-cloud-sdk.withExtraComponents [
-      google-cloud-sdk.components.gke-gcloud-auth-plugin
-    ])
-    kubectl
-    kubectx
-    stern
-    argocd
+    # (google-cloud-sdk.withExtraComponents [
+    #   google-cloud-sdk.components.gke-gcloud-auth-plugin
+    # ])
+    # kubectl
+    # kubectx
+    # stern
+    # argocd
 
     # From NUR
     nur.repos.caarlos0.glyphs
@@ -60,6 +60,7 @@
 
     # treesitter, lsps, formatters, etc
     bash-language-server
+    biome
     cargo
     clang-tools # clangd lsp
     delve
@@ -90,10 +91,8 @@
     zig
     zls # zig lsp
   ] ++ (lib.optionals pkgs.stdenv.isDarwin [
-    nur.repos.caarlos0.discord-applemusic-rich-presence
     terminal-notifier
     coreutils
-    mosquitto
   ]) ++ (lib.optionals pkgs.stdenv.isLinux [
     docker
     docker-compose

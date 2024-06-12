@@ -2,12 +2,23 @@
   home.packages = with pkgs; [
     git-lfs
   ];
-  home.file.".ssh/allowed_signers".text = "* ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILxWe2rXKoiO6W14LYPVfJKzRfJ1f3Jhzxrgjc/D4tU7";
+  # `programs.git` will generate the config file: ~/.config/git/config
+  # to make git use this config file, `~/.gitconfig` should not exist!
+  #
+  #    https://git-scm.com/docs/git-config#Documentation/git-config.txt---global
+  home.activation.removeExistingGitconfig = lib.hm.dag.entryBefore [ "checkLinkTargets" ] ''
+    rm -f ~/.gitconfig
+  '';
   programs.git = {
     enable = true;
-    delta.enable = true;
-    userName = "Carlos Alexandro Becker";
-    userEmail = "caarlos0@users.noreply.github.com";
+    delta = {
+      enable = true;
+      options = {
+        features = "side-by-side line-numbers decorations";
+      };
+    };
+    userName = "Riordan Pawley";
+    userEmail = "riordan@dogg.com.au";
     aliases = {
       co = "checkout";
       count = "shortlog -sn";
@@ -22,10 +33,6 @@
       unshallow = "fetch --prune --tags --unshallow";
     };
     extraConfig = {
-      commit.gpgSign = true;
-      gpg.format = "ssh";
-      gpg.ssh.allowedSignersFile = "~/.ssh/allowed_signers";
-      user.signingKey = "~/.ssh/id_ed25519";
       lfs = { enable = true; };
       core = {
         editor = "nvim";
@@ -51,11 +58,12 @@
         autoSetupRemote = true;
         default = "simple";
       };
+      merge.conflictStyle = "diff3";
       submodule = { fetchJobs = 4; };
       log = { showSignature = false; };
       format = { signOff = true; };
       rerere = { enabled = true; };
-      pull = { ff = "only"; };
+      pull = { ff = "only"; rebase = false; };
       init = { defaultBranch = "main"; };
     };
     ignores = lib.splitString "\n" (builtins.readFile ./gitignore_global);

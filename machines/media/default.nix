@@ -45,31 +45,31 @@ in
     enable = true;
     openFirewall = true;
     group = "wheel";
-    user = "carlos";
+    user = "riordan";
   };
   services.tautulli = {
     enable = true;
     openFirewall = true;
     group = "wheel";
-    user = "carlos";
+    user = "riordan";
   };
   services.sonarr = {
     enable = true;
     openFirewall = true;
     group = "wheel";
-    user = "carlos";
+    user = "riordan";
   };
   services.radarr = {
     enable = true;
     openFirewall = true;
     group = "wheel";
-    user = "carlos";
+    user = "riordan";
   };
   services.bazarr = {
     enable = true;
     openFirewall = true;
     group = "wheel";
-    user = "carlos";
+    user = "riordan";
   };
   services.prowlarr = {
     enable = true;
@@ -82,7 +82,7 @@ in
     wantedBy = [ "multi-user.target" ];
     serviceConfig = {
       Type = "simple";
-      User = "carlos";
+      User = "riordan";
       Group = "wheel";
       ExecStart =
         let
@@ -140,7 +140,7 @@ in
     wantedBy = [ "multi-user.target" ];
     serviceConfig = {
       Type = "exec";
-      User = "carlos";
+      User = "riordan";
       Group = "wheel";
       ExecStart = "${pkgs.qbittorrent-nox}/bin/qbittorrent-nox --webui-port=8090";
       Restart = "on-failure";
@@ -153,7 +153,7 @@ in
     wantedBy = [ "multi-user.target" ];
     serviceConfig = {
       Type = "exec";
-      User = "carlos";
+      User = "riordan";
       Group = "wheel";
       ExecStart = "${pkgs.flood}/bin/flood --host 0.0.0.0 --port=8091";
       Restart = "on-failure";

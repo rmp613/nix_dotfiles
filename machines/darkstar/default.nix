@@ -27,15 +27,15 @@
       enable = true;
     };
   };
-  users.users.carlos.extraGroups = [ "docker" ];
+  users.users.riordan.extraGroups = [ "docker" ];
 
   services.qemuGuest.enable = true;
   services.postgresql = {
     enable = true;
-    ensureDatabases = [ "carlos" ];
+    ensureDatabases = [ "riordan" ];
     ensureUsers = [
       {
-        name = "carlos";
+        name = "riordan";
         ensureClauses = {
           login = true;
           createrole = true;
@@ -89,14 +89,14 @@
         --exclude '**/.direnv/' \
         --exclude '**/dist/' \
         --exclude '**/.git/' \
-        $HOME/Developer/ nas:/darkstar/
+        $HOME/prog/ nas:/darkstar/
       rclone copy $HOME/.localrc.fish nas:/darkstar/
       rclone copy $HOME/.local/share/fish/fish_history nas:/darkstar/
-      curl -sf https://hc-ping.com/$(cat $HOME/Developer/.PING_ID)
+      curl -sf https://hc-ping.com/$(cat $HOME/prog/.PING_ID)
     '';
     serviceConfig = {
       Type = "oneshot";
-      User = "carlos";
+      User = "riordan";
     };
   };
 

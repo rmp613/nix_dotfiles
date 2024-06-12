@@ -17,8 +17,8 @@
     };
   };
 
-  home.packages = [ pkgs.gh-dash ];
-  xdg.configFile."gh-dash/config.yml" = {
-    source = config.lib.file.mkOutOfStoreSymlink ./gh-dash.yml;
-  };
+  # home.packages = [ pkgs.gh-dash ];
+  # xdg.configFile."gh-dash/config.yml" = {
+  #   source = config.lib.file.mkOutOfStoreSymlink ./gh-dash.yml;
+  # };
 }

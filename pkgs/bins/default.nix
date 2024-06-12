@@ -1,6 +1,6 @@
 { stdenv, ... }:
 stdenv.mkDerivation {
-  name = "caarlos0-bins";
+  name = "riordan-bins";
   version = "unstable";
   src = ./bin;
   installPhase = ''

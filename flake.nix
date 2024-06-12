@@ -22,6 +22,8 @@
       url = "github:lnl7/nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    catppuccin.url = "github:catppuccin/nix";
   };
 
   outputs =
@@ -34,6 +36,7 @@
     , home-manager
     , nix-index-database
     , nixpkgs
+    , catppuccin
     , ...
     }@inputs:
     let
@@ -61,25 +64,6 @@
     in
     {
       nixosConfigurations = {
-        media = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          modules = [
-            { nixpkgs.overlays = overlays; }
-            ./machines/media
-            home-manager.nixosModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.users.carlos = {
-                imports = [
-                  ./modules/home.nix
-                  ./modules/nixos.nix
-                  ./modules/shell.nix
-                ];
-              };
-            }
-          ];
-        };
         darkstar = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = [
@@ -89,7 +73,7 @@
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
-              home-manager.users.carlos = {
+              home-manager.users.riordan = {
                 imports = [
                   ./modules/home.nix
                   ./modules/nixos.nix
@@ -114,19 +98,21 @@
         };
       };
       darwinConfigurations = {
-        supernova = darwin.lib.darwinSystem {
+        rmbp = darwin.lib.darwinSystem {
           system = "aarch64-darwin";
           modules = [
             { nixpkgs.overlays = overlays; }
-            ./machines/supernova
+            ./machines/rmbp
             home-manager.darwinModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = false;
-              home-manager.users.carlos = {
+              home-manager.users.riordan = {
                 imports = [
+                  catppuccin.homeManagerModules.catppuccin
                   ./modules/home.nix
                   ./modules/darwin
+                  ./modules/qmk.nix
                   ./modules/pkgs.nix
                   ./modules/editorconfig.nix
                   ./modules/yamllint.nix
@@ -139,7 +125,7 @@
                   ./modules/gh
                   ./modules/top.nix
                   ./modules/shell.nix
-                  ./modules/ssh
+                  # ./modules/ssh
                   ./modules/charm.nix
                   ./modules/hammerspoon
                   inputs.caarlos0-nur.homeManagerModules.default
@@ -179,7 +165,8 @@
                 fi
                 if test $(uname -s) == "Darwin"; then
                   nix build "./#darwinConfigurations.$(hostname | cut -f1 -d'.').system"
-                  ./result/sw/bin/darwin-rebuild switch --flake .
+                  darwin-rebuild switch --flake .
+                  # ./result/sw/bin/darwin-rebuild switch --flake .
                 fi
               '')
             ];

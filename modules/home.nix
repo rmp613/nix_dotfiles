@@ -1,5 +1,5 @@
 { ... }: {
-  home.username = "carlos";
+  home.username = "riordan";
   home.stateVersion = "23.11";
 
   # Let Home Manager install and manage itself.
@@ -8,6 +8,6 @@
   home.sessionVariables = {
     LC_ALL = "en_US.UTF-8";
     LC_CTYPE = "en_US.UTF-8";
-    PROJECTS = "$HOME/Developer";
+    PROJECTS = "$HOME/prog";
   };
 }

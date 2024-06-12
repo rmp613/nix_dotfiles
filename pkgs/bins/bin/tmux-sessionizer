@@ -1,5 +1,5 @@
 #!/usr/bin/env fish
-# I organize my projects in ~/Developer/org/name, and I'd like to create sessions for each of them.
+# I organize my projects in ~/prog/org/name, and I'd like to create sessions for each of them.
 # This script uses a combination of find, zoxide (so they are sort by frecency) and fzf to list and filter project folders.
 # Then, it either switch to an existing tmux session for that project, or create a new one and switch to it.
 #
@@ -19,8 +19,8 @@ function search
         while read p
             zoxide query -l -s "$p/"
         end |
-        sed "s;$PROJECTS/;;" | # removes the ~/Developer/ prefix
-        grep -v "$PROJECTS" | # removes the ~/Developer folder itself
+        sed "s;$PROJECTS/;;" | # removes the ~/prog/ prefix
+        grep -v "$PROJECTS" | # removes the ~/prog folder itself
         grep / | # removes entries without subfolders
         sort -rnk1 | # sort by score
         uniq | # dedup

@@ -2,7 +2,7 @@
   programs.go = {
     enable = true;
     package = pkgs.go_1_22;
-    goPath = "Developer/Go";
+    goPath = "prog/Go";
     goPrivate = [
       "github.com/caarlos0"
       "github.com/charmbracelet"

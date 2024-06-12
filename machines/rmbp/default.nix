@@ -4,37 +4,56 @@
   };
   services = { nix-daemon = { enable = true; }; };
   nix.package = pkgs.nix;
-  nix.settings.trusted-users = [ "root" "carlos" ];
-
-  users.users.carlos = {
-    name = "carlos";
-    home = "/Users/carlos";
+  nix.settings.trusted-users = [ "root" "riordan" ];
+  networking.hostName = "rmbp";
+  networking.computerName = "rmbp";
+  users.users.riordan = {
+    name = "riordan";
+    home = "/Users/riordan";
   };
 
   homebrew = {
     enable = true;
+    global.brewfile = true;
+    onActivation = {
+      autoUpdate = false;
+      # 'zap': uninstalls all formulae(and related files) not listed here.
+      cleanup = "zap";
+    };
+    # disabling quarantine would mean no stupid macOS do-you-really-want-to-open dialogs
+    caskArgs.no_quarantine = true;
+    taps = [
+      "homebrew/cask-fonts"
+      "homebrew/services"
+      "homebrew/cask-versions"
+      # "stripe/cli"
+    ];
+
+    masApps = {
+      Xcode = 497799835;
+      Slack = 803453959;
+      Bitwarden = 1352778147;
+    };
+
     casks = [
-      "1password"
-      "blackhole-2ch"
-      "cleanshot"
-      "dash5"
-      "deckset"
       "discord"
       "font-jetbrains-mono"
       "font-jetbrains-mono-nerd-font"
       "google-chrome"
       "hammerspoon"
-      "imageoptim"
-      "keybase"
-      "ledger-live"
-      "monodraw"
-      "sensei"
-      "signal"
       "slack"
-      "soulver"
-      "telegram"
-      "whatsapp"
       "zoom"
+      "visual-studio-code"
+      "arc"
+      "linear-linear"
+      "orbstack"
+      "rectangle"
+      "soundsource"
+      "istat-menus"
+      "raycast"
+      "iina"
+      "tableplus"
+      "microsoft-teams"
     ];
   };
 
@@ -53,6 +72,11 @@
         launchanim = false;
         mineffect = "scale";
         mru-spaces = false;
+        # customize Hot Corners
+        wvous-tl-corner = 1;
+        wvous-tr-corner = 1;
+        wvous-bl-corner = 1;
+        wvous-br-corner = 1;
       };
       NSGlobalDomain = {
         ApplePressAndHoldEnabled = false;
@@ -78,21 +102,46 @@
         ShowStatusBar = true;
         ShowPathbar = true;
       };
-      CustomUserPreferences = {
+      CustomUserPreferences = { 
+        ".GlobalPreferences" = {
+          # automatically switch to a new space when switching to the application
+          AppleSpacesSwitchOnActivate = false;
+        };
         "com.apple.NetworkBrowser" = { "BrowseAllInterfaces" = true; };
         # "WebAutomaticTextReplacementEnabled" = true;
-        "com.apple.screensaver" = {
-          "askForPassword" = true;
-          "askForPasswordDelay" = 0;
-        };
-        "com.apple.trackpad" = { "scaling" = 2; };
-        "com.apple.mouse" = { "scaling" = 2.5; };
-        "com.apple.desktopservices" = { "DSDontWriteNetworkStores" = false; };
+        # "com.apple.screensaver" = {
+        #   "askForPassword" = true;
+        #   "askForPasswordDelay" = 0;
+        # };
+        # "com.apple.trackpad" = { "scaling" = 2; };
+        # "com.apple.mouse" = { "scaling" = 2.5; };
         "com.apple.LaunchServices" = { "LSQuarantine" = true; };
         "com.apple.finder" = {
           "ShowExternalHardDrivesOnDesktop" = false;
           "ShowRemovableMediaOnDesktop" = false;
           "WarnOnEmptyTrash" = false;
+          _FXSortFoldersFirst = true;
+          # When performing a search, search the current folder by default
+          FXDefaultSearchScope = "SCcf";
+        };
+
+        "com.apple.spaces" = {
+          "spans-displays" = 0; # Display have seperate spaces
+        };  
+        "com.apple.screencapture" = {
+          location = "~/Pictures/screenshots";
+          type = "png";
+        };
+        "com.apple.AdLib" = {
+          allowApplePersonalizedAdvertising = false;
+        };
+        "com.apple.desktopservices" = {
+          # Avoid creating .DS_Store files on network or USB volumes
+          DSDontWriteNetworkStores = true;
+          DSDontWriteUSBStores = true;
+        };
+        "com.apple.spaces" = {
+          "spans-displays" = 0; # Display have seperate spaces
         };
         "NSGlobalDomain" = {
           "NSNavPanelExpandedStateForSaveMode" = true;
@@ -110,4 +159,6 @@
       };
     };
   };
+
+  security.pam.enableSudoTouchIdAuth = true;
 }
