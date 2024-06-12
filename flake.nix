@@ -112,7 +112,6 @@
                   catppuccin.homeManagerModules.catppuccin
                   ./modules/home.nix
                   ./modules/darwin
-                  ./modules/qmk.nix
                   ./modules/pkgs.nix
                   ./modules/editorconfig.nix
                   ./modules/yamllint.nix

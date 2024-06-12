@@ -124,10 +124,6 @@
           # When performing a search, search the current folder by default
           FXDefaultSearchScope = "SCcf";
         };
-
-        "com.apple.spaces" = {
-          "spans-displays" = 0; # Display have seperate spaces
-        };  
         "com.apple.screencapture" = {
           location = "~/Pictures/screenshots";
           type = "png";
