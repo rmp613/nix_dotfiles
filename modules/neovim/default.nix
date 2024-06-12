@@ -45,7 +45,6 @@ in
       vim-tmux-navigator
       better-escape-nvim
       bufdelete-nvim
-      cloak-nvim
 
       # coding
       nvim-lspconfig
@@ -115,7 +114,7 @@ in
           vhs
           vim
           yaml
-          zig
+          # zig
         ]))
       nvim-treesitter-textobjects
       nvim-treesitter-context

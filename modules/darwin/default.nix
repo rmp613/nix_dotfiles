@@ -11,11 +11,11 @@
   # };
 
   services = {
-    xdg-open-svc.enable = true;
+    # xdg-open-svc.enable = true;
   };
 
   programs.fish.shellInit = ''
-    fish_add_path -a ~/Applications/Ghostty.app/Contents/MacOS/
+    fish_add_path -a ~/Applications/WezTerm.app/Contents/MacOS/
     fish_add_path -a /Applications/Postgres.app/Contents/Versions/latest/bin/
     fish_add_path -a /opt/homebrew/bin/
   '';

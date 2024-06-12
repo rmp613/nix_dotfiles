@@ -2,11 +2,7 @@
   description = "caarlos0's nixos, nix-darwin, and home-manager configs";
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    nur.url = "github:nix-community/NUR";
-    caarlos0-nur.url = "github:caarlos0/nur";
-    charmbracelet-nur.url = "github:charmbracelet/nur";
-    goreleaser-nur.url = "github:goreleaser/nur";
-    # neovim-nightly.url = "github:nix-community/neovim-nightly-overlay";
+       # neovim-nightly.url = "github:nix-community/neovim-nightly-overlay";
 
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -22,19 +18,17 @@
       url = "github:lnl7/nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    
+    zig.url = "github:mitchellh/zig-overlay";
 
     catppuccin.url = "github:catppuccin/nix";
   };
 
   outputs =
-    { nur
-      # , neovim-nightly
-    , caarlos0-nur
-    , charmbracelet-nur
-    , goreleaser-nur
-    , darwin
+    { darwin
     , home-manager
     , nix-index-database
+    , zig
     , nixpkgs
     , catppuccin
     , ...
@@ -42,17 +36,6 @@
     let
       overlays = [
         # inputs.neovim-nightly.overlay
-        (final: prev: {
-          nur = import nur {
-            nurpkgs = prev;
-            pkgs = prev;
-            repoOverrides = {
-              caarlos0 = import caarlos0-nur { pkgs = prev; };
-              charmbracelet = import charmbracelet-nur { pkgs = prev; };
-              goreleaser = import goreleaser-nur { pkgs = prev; };
-            };
-          };
-        })
       ];
 
       forAllSystems = nixpkgs.lib.genAttrs nixpkgs.lib.platforms.unix;
@@ -72,6 +55,7 @@
             home-manager.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
+              home-manager.backupFileExtension = "backup";
               home-manager.useUserPackages = true;
               home-manager.users.riordan = {
                 imports = [
@@ -87,6 +71,7 @@
                   ./modules/git
                   ./modules/gh
                   ./modules/top.nix
+                  ./modules/wezterm.nix
                   ./modules/shell.nix
                   ./modules/ssh
                   ./modules/charm.nix
@@ -106,6 +91,7 @@
             home-manager.darwinModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
+              home-manager.backupFileExtension = "backup";
               home-manager.useUserPackages = false;
               home-manager.users.riordan = {
                 imports = [
@@ -117,19 +103,18 @@
                   ./modules/yamllint.nix
                   ./modules/go.nix
                   ./modules/fzf.nix
-                  ./modules/ghostty
+                  # ./modules/ghostty
                   ./modules/tmux
                   ./modules/neovim
                   ./modules/git
                   ./modules/gh
                   ./modules/top.nix
                   ./modules/shell.nix
-                  # ./modules/ssh
-                  ./modules/charm.nix
+       
+                  # ./modules/charm.nix
                   ./modules/hammerspoon
-                  inputs.caarlos0-nur.homeManagerModules.default
                   # ./modules/yubikey.nix
-                  nix-index-database.hmModules.nix-index
+                  # nix-index-database.hmModules.nix-index
                 ];
               };
             }
@@ -164,8 +149,8 @@
                 fi
                 if test $(uname -s) == "Darwin"; then
                   nix build "./#darwinConfigurations.$(hostname | cut -f1 -d'.').system"
-                  darwin-rebuild switch --flake .
-                  # ./result/sw/bin/darwin-rebuild switch --flake .
+                  # darwin-rebuild switch --flake .
+                  ./result/sw/bin/darwin-rebuild switch --flake .
                 fi
               '')
             ];

@@ -8,7 +8,6 @@
   home.packages = with pkgs; with pkgs.nodePackages_latest; [
     # custom packages
     (pkgs.callPackage ../pkgs/bins { })
-
     # age # modern encryption tool
     comma # https://github.com/nix-community/comma runs without install via , prefixing tools
     # cosign # container signing
@@ -23,9 +22,8 @@
     # inetutils 
     jq # json parser
     moreutils # random additional commands such as "parallel" to run commands in parallel
-    ncdu # disk usage analyzer
-    # netcat-gnu
-    # nmap # network scanner
+    # ncdu # disk usage analyzer warning - this will break until i figure out the zig header issues
+  
     nodejs
     onefetch # git repo summary
     p7zip
@@ -50,13 +48,6 @@
     # argocd
 
     # From NUR
-    nur.repos.caarlos0.glyphs
-    nur.repos.caarlos0.gocovsh
-    nur.repos.caarlos0.gopls # always latest
-    nur.repos.caarlos0.golangci-lint # always latest
-    nur.repos.caarlos0.jsonfmt
-    nur.repos.caarlos0.svu
-    nur.repos.goreleaser.goreleaser-pro
 
     # treesitter, lsps, formatters, etc
     bash-language-server
@@ -88,8 +79,9 @@
     vscode-json-languageserver-bin
     yaml-language-server
     yamllint
-    zig
-    zls # zig lsp
+    # broken till i figure out the zig header issues
+    # zig
+    # zls # zig lsp
   ] ++ (lib.optionals pkgs.stdenv.isDarwin [
     terminal-notifier
     coreutils

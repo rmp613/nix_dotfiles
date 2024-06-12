@@ -14,7 +14,7 @@ conform.setup({
     sql = { "pg_format", "sql_formatter" },
     tf = { "terraform_fmt" },
     yaml = { "prettier" },
-    zig = { "zigfmt" },
+    -- zig = { "zigfmt" },
     ["_"] = { "trim_whitespace", "trim_newlines" },
   },
   format_on_save = {
